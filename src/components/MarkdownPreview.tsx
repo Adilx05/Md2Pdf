@@ -12,7 +12,7 @@ const MarkdownPreview: FC<MarkdownPreviewProps> = ({ markdown, previewRef }) => 
 
   return (
     <section className="panel preview-panel">
-      <h2>Canlı Önizleme</h2>
+      <h2>Live Preview</h2>
 
       {hasContent ? (
         <article ref={previewRef} className="preview-content" aria-label="Markdown preview">

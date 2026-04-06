@@ -25,9 +25,9 @@ const FileUploader: FC<FileUploaderProps> = ({ onFileSelect }) => {
 
   return (
     <div className="file-uploader">
-      Markdown yükle
+      Upload Markdown
       <button type="button" className="secondary-btn" onClick={handleButtonClick}>
-        Dosya Seç
+        Select File
       </button>
       <input
         ref={fileInputRef}

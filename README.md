@@ -1,126 +1,126 @@
 # Md2Pdf
 
-Md2Pdf, tarayıcı içinde çalışan ve yazdığınız Markdown içeriğini anlık olarak önizleyip PDF olarak dışa aktarmanızı sağlayan bir React + Vite uygulamasıdır.
+Md2Pdf is a React + Vite application that runs in the browser and lets you edit Markdown with live preview, then export it as PDF.
 
-## Proje Amacı
+## Project Goal
 
-Bu projenin amacı, **backend gerektirmeden** Markdown metnini hızlıca düzenlemek, önizlemek ve paylaşılabilir bir PDF çıktısı üretmektir. Uygulama tamamen istemci tarafında (browser) çalışır.
+The goal of this project is to provide a **backend-free** workflow for writing Markdown, previewing it instantly, and generating a shareable PDF output. The app runs entirely on the client side.
 
-## Özellikler
+## Features
 
-- Canlı Markdown editörü ve anlık önizleme
-- `remark-gfm` ile GFM (GitHub Flavored Markdown) desteği
-- `.md` dosyası yükleme (butonla seçme veya sürükle-bırak)
-- Tek tıkla Markdown metnini panoya kopyalama
-- Tek tıkla PDF indirme (tarayıcı tabanlı üretim)
-- İçerik temizleme ve kelime sayısı gösterimi
-- Vite `base` ayarı üzerinden GitHub Pages uyumlu yayın desteği
+- Live Markdown editor with real-time preview
+- GFM (GitHub Flavored Markdown) support via `remark-gfm`
+- `.md` file upload (file picker or drag-and-drop)
+- One-click copy to clipboard
+- One-click PDF export (browser-based)
+- Content clearing and word count display
+- GitHub Pages-compatible publishing support via Vite `base` config
 
-## Kullanılan Teknolojiler
+## Tech Stack
 
-- **React 18** (arayüz)
-- **TypeScript** (tip güvenliği)
-- **Vite 5** (geliştirme/build aracı)
-- **react-markdown** + **remark-gfm** (Markdown render)
-- **html2pdf.js** (önizleme alanını PDF'e dönüştürme)
-- **gh-pages** (GitHub Pages'e manuel deploy)
+- **React 18** (UI)
+- **TypeScript** (type safety)
+- **Vite 5** (dev/build tooling)
+- **react-markdown** + **remark-gfm** (Markdown rendering)
+- **html2pdf.js** (preview-to-PDF conversion)
+- **gh-pages** (manual GitHub Pages deploy)
 
-## Kurulum ve Çalıştırma
+## Setup and Run
 
-> Node.js 18+ önerilir.
+> Node.js 18+ is recommended.
 
-1. Bağımlılıkları yükleyin:
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-2. Geliştirme sunucusunu başlatın:
+2. Start development server:
 
 ```bash
 npm run dev
 ```
 
-3. Production build alın:
+3. Build for production:
 
 ```bash
 npm run build
 ```
 
-4. Build çıktısını localde önizleyin:
+4. Preview production build locally:
 
 ```bash
 npm run preview
 ```
 
-## GitHub Pages için `VITE_BASE_PATH` Kullanımı
+## `VITE_BASE_PATH` for GitHub Pages
 
-Vite yapılandırmasında `base` değeri `VITE_BASE_PATH` değişkeninden okunur. Repository adı altına deploy ederken build komutunu şu şekilde çalıştırın:
+In Vite config, the `base` value is read from `VITE_BASE_PATH`. When deploying under a repository path, run build like this:
 
 ```bash
 VITE_BASE_PATH=/<repo>/ npm run build
 ```
 
-Örnek:
+Example:
 
 ```bash
 VITE_BASE_PATH=/Md2Pdf/ npm run build
 ```
 
-Bu sayede asset yolları GitHub Pages altında doğru çözülür.
+This ensures asset paths resolve correctly on GitHub Pages.
 
-### Sık Karşılaşılan Hata: `GET .../src/main.tsx 404`
+### Common Error: `GET .../src/main.tsx 404`
 
-GitHub Pages üzerinde konsolda `GET https://<kullanici>.github.io/src/main.tsx 404` görüyorsanız genelde şu iki durumdan biri vardır:
+If you see `GET https://<username>.github.io/src/main.tsx 404` in the browser console, one of these is usually the cause:
 
-1. **Yanlış URL açılmıştır.**  
-   Proje Pages URL'si çoğunlukla `https://<kullanici>.github.io/<repo>/` olur.  
-   Örnek: `https://adilx05.github.io/Md2Pdf/`
-2. **`dist/` yerine kaynak dosyalar publish edilmiştir.**  
-   Pages kaynağının build çıktısı (`dist`) olduğundan emin olun (Actions workflow veya `gh-pages -d dist`).
+1. **Wrong URL was opened.**  
+   The project page is usually: `https://<username>.github.io/<repo>/`  
+   Example: `https://adilx05.github.io/Md2Pdf/`
+2. **Source files were published instead of `dist/`.**  
+   Ensure your Pages source is the built output (`dist`) through GitHub Actions or `gh-pages -d dist`.
 
-Bu repoda `vite.config.ts`, CI ortamında (`GITHUB_REPOSITORY`) repo adını algılayıp `base` değerini otomatik olarak `/<repo>/` yapacak şekilde ayarlanmıştır. Böylece `VITE_BASE_PATH` verilmediğinde bile proje sayfası deploylarında doğru yol kullanılır.
+In this repo, `vite.config.ts` detects the repository name in CI (`GITHUB_REPOSITORY`) and automatically sets `base` to `/<repo>/`. So even without `VITE_BASE_PATH`, project-page deploys still resolve paths correctly.
 
-## Otomatik GitHub Pages Deploy (GitHub Actions)
+## Automatic GitHub Pages Deploy (GitHub Actions)
 
-Bu repoda `.github/workflows/deploy.yml` ile **`main` branch'ine yapılan her push'ta** otomatik GitHub Pages deploy akışı çalışır. İş akışı Node kurulumu, bağımlılıkların yüklenmesi, `VITE_BASE_PATH=/${{ github.event.repository.name }}/ npm run build` ile build alınması ve ardından Pages artifact/deploy adımlarını içerir.
+This repo includes `.github/workflows/deploy.yml`, which runs automatic GitHub Pages deployment on every push to the `main` branch. The workflow installs Node, installs dependencies, builds with `VITE_BASE_PATH=/${{ github.event.repository.name }}/ npm run build`, then publishes the Pages artifact/deploy steps.
 
-## Manuel `gh-pages` Deploy Adımları
+## Manual `gh-pages` Deployment
 
-Aşağıdaki adımlar, GitHub Actions ile otomatik deploy yöntemine **manuel bir alternatif** olarak kullanılabilir:
+Use these steps as a **manual alternative** to automatic GitHub Actions deployment:
 
-1. `main` (veya çalıştığınız) branch'inde güncel olduğunuzdan emin olun.
-2. Gerekli paketleri yükleyin:
+1. Ensure your `main` (or working) branch is up to date.
+2. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. GitHub Pages için doğru base path ile build alın:
+3. Build with the correct base path:
 
    ```bash
    VITE_BASE_PATH=/<repo>/ npm run build
    ```
 
-4. `dist/` klasörünü `gh-pages` branch'ine gönderin:
+4. Publish `dist/` to the `gh-pages` branch:
 
    ```bash
    npx gh-pages -d dist
    ```
 
-   > Alternatif: varsayılan script ile `npm run deploy` (repo köküne deploy ediyorsanız).
+   > Alternative: use `npm run deploy` if deploying to repository root.
 
-5. GitHub repo ayarlarından **Settings → Pages** bölümünde source olarak `gh-pages` branch'ini seçin.
-6. Yayın URL'si açıldığında uygulamayı test edin.
+5. In GitHub settings, go to **Settings → Pages** and set source to `gh-pages`.
+6. Open the published URL and test the app.
 
-## Tarayıcı Tabanlı PDF Üretiminin Bilinen Limitasyonları
+## Known Limitations of Browser-Based PDF Export
 
-- **Render farkları:** PDF çıktısı, tarayıcı motoruna ve işletim sistemine göre küçük farklılıklar gösterebilir.
-- **Çok uzun dokümanlar:** Büyük içeriklerde bellek tüketimi artabilir ve işlem süresi uzayabilir.
-- **Sayfa kırılımı:** Karmaşık tablolar/kod bloklarında ideal sayfa kırılımı her zaman garanti edilemez.
-- **Font/CORS etkileri:** Harici font veya görseller CORS nedeniyle yüklenemezse çıktı etkilenebilir.
-- **Tam baskı motoru değildir:** Browser tabanlı yaklaşım, profesyonel masaüstü dizgi araçları kadar deterministik sonuç vermeyebilir.
+- **Rendering differences:** PDF output can vary slightly by browser engine and OS.
+- **Very long documents:** Large content may increase memory use and export time.
+- **Page breaks:** Complex tables/code blocks may not always break perfectly.
+- **Font/CORS effects:** External fonts/images may fail to load due to CORS.
+- **Not a full print engine:** Browser-based output may be less deterministic than professional desktop publishing tools.
 
-## Lisans
+## License
 
-Bu depo için henüz bir lisans dosyası tanımlanmamıştır.
+No license file has been defined for this repository yet.

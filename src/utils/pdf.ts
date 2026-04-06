@@ -51,7 +51,7 @@ const getHtml2Pdf = () => {
   const html2pdf = window.html2pdf as Html2PdfFactory | undefined;
 
   if (!html2pdf) {
-    throw new Error('PDF kütüphanesi yüklenemedi. Lütfen sayfayı yenileyip tekrar deneyin.');
+    throw new Error('PDF library could not be loaded. Please refresh the page and try again.');
   }
 
   return html2pdf;
@@ -64,7 +64,7 @@ export const exportPreviewToPdf = async (
   const sourceElement = previewRef.current;
 
   if (!sourceElement) {
-    throw new Error('Önizleme alanı bulunamadı. Lütfen tekrar deneyin.');
+    throw new Error('Preview area not found. Please try again.');
   }
 
   const html2pdf = getHtml2Pdf();

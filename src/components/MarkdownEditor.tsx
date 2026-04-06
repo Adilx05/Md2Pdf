@@ -45,13 +45,13 @@ const MarkdownEditor: FC<MarkdownEditorProps> = ({ value, onChange, onFileSelect
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
-      <h2>Editör</h2>
-      <p className="editor-drop-hint">İpucu: Markdown dosyasını buraya sürükleyip bırakabilirsiniz.</p>
+      <h2>Editor</h2>
+      <p className="editor-drop-hint">Tip: Drag and drop a Markdown file here.</p>
       <textarea
-        aria-label="Markdown editörü"
+        aria-label="Markdown editor"
         value={value}
         onChange={handleChange}
-        placeholder="Markdown içeriğinizi buraya yazın..."
+        placeholder="Write your Markdown content here..."
       />
     </section>
   );
