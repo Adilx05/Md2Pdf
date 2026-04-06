@@ -261,6 +261,21 @@ button:disabled {
   background: #fbfcff;
 }
 
+
+.preview-content :is(table, thead, tbody, tr, th, td, pre, code, blockquote) {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.preview-content table {
+  page-break-inside: avoid;
+}
+
+.preview-content pre {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
 @media (max-width: 900px) {
   .toolbar,
   .meta-row {
