@@ -77,8 +77,16 @@ button:disabled {
   gap: 0.5rem;
 }
 
-.file-uploader input {
-  max-width: 170px;
+.visually-hidden-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .toast {
@@ -118,6 +126,17 @@ button:disabled {
   flex: 1;
   resize: vertical;
   font: 500 0.95rem/1.45 'Fira Code', 'JetBrains Mono', Menlo, monospace;
+}
+
+.editor-drop-hint {
+  margin: 0 0 0.75rem;
+  color: #5f6a80;
+  font-size: 0.9rem;
+}
+
+.editor-panel.drag-over {
+  border-color: #3f6df6;
+  box-shadow: 0 0 0 3px rgba(63, 109, 246, 0.12);
 }
 
 .preview-content {

@@ -4,6 +4,7 @@ import MarkdownEditor from './components/MarkdownEditor';
 import MarkdownPreview from './components/MarkdownPreview';
 import Toolbar from './components/Toolbar';
 import './styles/app.css';
+import { readMarkdownFile } from './utils/file';
 
 const SAMPLE_MARKDOWN = `# Md2Pdf'e hoş geldin 👋
 
@@ -64,12 +65,23 @@ function App() {
     setFeedbackMessage('Editör örnek içerikle sıfırlandı.');
   };
 
+  const handleMarkdownFile = async (file: File) => {
+    try {
+      const content = await readMarkdownFile(file);
+      setMarkdown(content);
+      setFeedbackMessage(`${file.name} yüklendi.`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Dosya okunamadı. Lütfen tekrar deneyin.';
+      setFeedbackMessage(message);
+    }
+  };
+
   return (
     <main className="app-shell">
       <Toolbar isExporting={isExporting} onExport={handleExport} onReset={handleReset} />
 
       <section className="meta-row">
-        <FileUploader onFileContent={setMarkdown} onFeedback={setFeedbackMessage} />
+        <FileUploader onFileSelect={handleMarkdownFile} />
         <p>{wordCount} kelime</p>
       </section>
 
@@ -80,7 +92,7 @@ function App() {
       )}
 
       <section className="content-grid">
-        <MarkdownEditor value={markdown} onChange={setMarkdown} />
+        <MarkdownEditor value={markdown} onChange={setMarkdown} onFileSelect={handleMarkdownFile} />
         <MarkdownPreview markdown={markdown} />
       </section>
     </main>

@@ -1,40 +1,42 @@
 import type { ChangeEvent, FC } from 'react';
+import { useRef } from 'react';
 
 type FileUploaderProps = {
-  onFileContent: (content: string) => void;
-  onFeedback: (message: string) => void;
+  onFileSelect: (file: File) => void;
 };
 
-const FileUploader: FC<FileUploaderProps> = ({ onFileContent, onFeedback }) => {
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+const FileUploader: FC<FileUploaderProps> = ({ onFileSelect }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
     if (!file) {
       return;
     }
 
-    if (!file.name.endsWith('.md') && file.type !== 'text/markdown') {
-      onFeedback('Lütfen .md uzantılı bir dosya seçin.');
-      event.target.value = '';
-      return;
-    }
+    onFileSelect(file);
+    event.target.value = '';
+  };
 
-    try {
-      const text = await file.text();
-      onFileContent(text);
-      onFeedback(`${file.name} yüklendi.`);
-    } catch {
-      onFeedback('Dosya okunamadı. Lütfen tekrar deneyin.');
-    } finally {
-      event.target.value = '';
-    }
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
-    <label className="file-uploader">
+    <div className="file-uploader">
       Markdown yükle
-      <input type="file" accept=".md,text/markdown" onChange={handleFileChange} />
-    </label>
+      <button type="button" className="secondary-btn" onClick={handleButtonClick}>
+        Dosya Seç
+      </button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        className="visually-hidden-file-input"
+        accept=".md,.markdown,text/markdown,text/plain"
+        onChange={handleFileChange}
+      />
+    </div>
   );
 };
 
