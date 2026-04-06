@@ -69,9 +69,13 @@ VITE_BASE_PATH=/Md2Pdf/ npm run build
 
 Bu sayede asset yolları GitHub Pages altında doğru çözülür.
 
+## Otomatik GitHub Pages Deploy (GitHub Actions)
+
+Bu repoda `.github/workflows/deploy.yml` ile **`main` branch'ine yapılan her push'ta** otomatik GitHub Pages deploy akışı çalışır. İş akışı Node kurulumu, bağımlılıkların yüklenmesi, `VITE_BASE_PATH=/${{ github.event.repository.name }}/ npm run build` ile build alınması ve ardından Pages artifact/deploy adımlarını içerir.
+
 ## Manuel `gh-pages` Deploy Adımları
 
-Aşağıdaki adımlar manuel yayın akışı içindir:
+Aşağıdaki adımlar, GitHub Actions ile otomatik deploy yöntemine **manuel bir alternatif** olarak kullanılabilir:
 
 1. `main` (veya çalıştığınız) branch'inde güncel olduğunuzdan emin olun.
 2. Gerekli paketleri yükleyin:
