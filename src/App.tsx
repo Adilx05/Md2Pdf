@@ -27,7 +27,7 @@ Paragraf, **kalın**, *italik* ve \`inline code\` desteği var.
 function App() {
   const [markdown, setMarkdown] = useState<string>('');
   const [isExporting, setIsExporting] = useState(false);
-  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
+  const [feedbackMessage, setFeedbackMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
   const previewRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!feedbackMessage) {
+    if (!feedbackMessage?.text) {
       return;
     }
 
@@ -58,10 +58,10 @@ function App() {
     try {
       setIsExporting(true);
       await exportPreviewToPdf(previewRef);
-      setFeedbackMessage('PDF başarıyla dışa aktarıldı.');
+      setFeedbackMessage({ text: 'PDF başarıyla dışa aktarıldı.', type: 'success' });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'PDF dışa aktarılamadı. Lütfen tekrar deneyin.';
-      setFeedbackMessage(message);
+      setFeedbackMessage({ text: message, type: 'error' });
     } finally {
       setIsExporting(false);
     }
@@ -69,15 +69,15 @@ function App() {
 
   const handleClear = () => {
     setMarkdown('');
-    setFeedbackMessage('Markdown içeriği temizlendi.');
+    setFeedbackMessage({ text: 'Markdown içeriği temizlendi.', type: 'info' });
   };
 
   const handleCopyMarkdown = async () => {
     try {
       await navigator.clipboard.writeText(markdown);
-      setFeedbackMessage('Markdown panoya kopyalandı.');
+      setFeedbackMessage({ text: 'Markdown panoya kopyalandı.', type: 'success' });
     } catch {
-      setFeedbackMessage('Kopyalama başarısız oldu. Lütfen tekrar deneyin.');
+      setFeedbackMessage({ text: 'Kopyalama başarısız oldu. Lütfen tekrar deneyin.', type: 'error' });
     }
   };
 
@@ -85,10 +85,10 @@ function App() {
     try {
       const content = await readMarkdownFile(file);
       setMarkdown(content);
-      setFeedbackMessage(`${file.name} yüklendi.`);
+      setFeedbackMessage({ text: `${file.name} yüklendi.`, type: 'success' });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Dosya okunamadı. Lütfen tekrar deneyin.';
-      setFeedbackMessage(message);
+      setFeedbackMessage({ text: message, type: 'error' });
     }
   };
 
@@ -108,8 +108,8 @@ function App() {
       </section>
 
       {feedbackMessage && (
-        <p className="toast" role="status" aria-live="polite">
-          {feedbackMessage}
+        <p className={`toast toast-${feedbackMessage.type}`} role="status" aria-live="polite">
+          {feedbackMessage.text}
         </p>
       )}
 
@@ -117,6 +117,8 @@ function App() {
         <MarkdownEditor value={markdown} onChange={setMarkdown} onFileSelect={handleMarkdownFile} />
         <MarkdownPreview markdown={markdown} previewRef={previewRef} />
       </section>
+
+      <footer className="app-footer">Runs locally in your browser. No backend required.</footer>
     </main>
   );
 }
