@@ -6,21 +6,21 @@ import './styles/app.css';
 import { readMarkdownFile } from './utils/file';
 import { exportPreviewToPdf } from './utils/pdf';
 
-const SAMPLE_MARKDOWN = `# Md2Pdf'e hoş geldin 👋
+const SAMPLE_MARKDOWN = `# Welcome to Md2Pdf 👋
 
-Bu editör ile **Markdown** metni yazabilir, anlık önizlemesini sağ tarafta görebilirsin.
+With this editor, you can write **Markdown** and see its live preview on the right.
 
-## Hızlı Başlangıç
+## Quick Start
 
-- Sol panelde markdown yaz.
-- Üst araç çubuğundan .md dosyası yükle.
-- Hazır olduğunda PDF olarak dışa aktar.
+- Write Markdown in the left panel.
+- Upload a .md file from the top toolbar.
+- Export your content as PDF when it is ready.
 
-### İpucu
+### Tip
 
 \`\`\`markdown
-# Başlık
-Paragraf, **kalın**, *italik* ve \`inline code\` desteği var.
+# Heading
+Paragraph with **bold**, *italic*, and \`inline code\` support.
 \`\`\`
 `;
 
@@ -58,9 +58,9 @@ function App() {
     try {
       setIsExporting(true);
       await exportPreviewToPdf(previewRef);
-      setFeedbackMessage({ text: 'PDF başarıyla dışa aktarıldı.', type: 'success' });
+      setFeedbackMessage({ text: 'PDF exported successfully.', type: 'success' });
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'PDF dışa aktarılamadı. Lütfen tekrar deneyin.';
+      const message = error instanceof Error ? error.message : 'Failed to export PDF. Please try again.';
       setFeedbackMessage({ text: message, type: 'error' });
     } finally {
       setIsExporting(false);
@@ -69,15 +69,15 @@ function App() {
 
   const handleClear = () => {
     setMarkdown('');
-    setFeedbackMessage({ text: 'Markdown içeriği temizlendi.', type: 'info' });
+    setFeedbackMessage({ text: 'Markdown content cleared.', type: 'info' });
   };
 
   const handleCopyMarkdown = async () => {
     try {
       await navigator.clipboard.writeText(markdown);
-      setFeedbackMessage({ text: 'Markdown panoya kopyalandı.', type: 'success' });
+      setFeedbackMessage({ text: 'Markdown copied to clipboard.', type: 'success' });
     } catch {
-      setFeedbackMessage({ text: 'Kopyalama başarısız oldu. Lütfen tekrar deneyin.', type: 'error' });
+      setFeedbackMessage({ text: 'Copy failed. Please try again.', type: 'error' });
     }
   };
 
@@ -85,9 +85,9 @@ function App() {
     try {
       const content = await readMarkdownFile(file);
       setMarkdown(content);
-      setFeedbackMessage({ text: `${file.name} yüklendi.`, type: 'success' });
+      setFeedbackMessage({ text: `${file.name} uploaded.`, type: 'success' });
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Dosya okunamadı. Lütfen tekrar deneyin.';
+      const message = error instanceof Error ? error.message : 'Failed to read file. Please try again.';
       setFeedbackMessage({ text: message, type: 'error' });
     }
   };
@@ -104,7 +104,7 @@ function App() {
       />
 
       <section className="meta-row">
-        <p>{wordCount} kelime</p>
+        <p>{wordCount} words</p>
       </section>
 
       {feedbackMessage && (
@@ -119,7 +119,7 @@ function App() {
       </section>
 
       <footer className="app-footer">
-        made by <a href="https://github.com/Adilx05" target="_blank" rel="noreferrer">QWRpbA==</a> with ❤️
+        Made by <a href="https://github.com/Adilx05" target="_blank" rel="noreferrer">QWRpbA==</a> with ❤️
       </footer>
     </main>
   );

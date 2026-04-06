@@ -34,7 +34,7 @@ const Toolbar: FC<ToolbarProps> = ({
   };
 
   return (
-    <header className="toolbar" aria-label="Editör araç çubuğu">
+    <header className="toolbar" aria-label="Editor toolbar">
       <h1 className="toolbar-brand" aria-label="Md2Pdf">
         <img src="/Md2Pdf/logo.png" alt="Md2Pdf logo" className="toolbar-logo" />
       </h1>
