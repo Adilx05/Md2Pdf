@@ -118,7 +118,9 @@ function App() {
         <MarkdownPreview markdown={markdown} previewRef={previewRef} />
       </section>
 
-      <footer className="app-footer">Runs locally in your browser. No backend required.</footer>
+      <footer className="app-footer">
+        made by <a href="https://github.com/Adilx05" target="_blank" rel="noreferrer">QWRpbA==</a> with ❤️
+      </footer>
     </main>
   );
 }

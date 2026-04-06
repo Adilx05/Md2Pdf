@@ -35,9 +35,8 @@ const Toolbar: FC<ToolbarProps> = ({
 
   return (
     <header className="toolbar" aria-label="Editör araç çubuğu">
-      <h1 className="toolbar-brand">
-        <img src="/logo.png" alt="Md2Pdf logo" className="toolbar-logo" />
-        <span>Md2Pdf</span>
+      <h1 className="toolbar-brand" aria-label="Md2Pdf">
+        <img src="/Md2Pdf/logo.png" alt="Md2Pdf logo" className="toolbar-logo" />
       </h1>
       <div className="toolbar-actions">
         <button type="button" className="secondary-btn" onClick={handleButtonClick}>
