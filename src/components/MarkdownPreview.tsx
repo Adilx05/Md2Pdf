@@ -1,12 +1,13 @@
-import type { FC } from 'react';
+import type { FC, RefObject } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 type MarkdownPreviewProps = {
   markdown: string;
+  previewRef: RefObject<HTMLElement>;
 };
 
-const MarkdownPreview: FC<MarkdownPreviewProps> = ({ markdown }) => {
+const MarkdownPreview: FC<MarkdownPreviewProps> = ({ markdown, previewRef }) => {
   const hasContent = markdown.trim().length > 0;
 
   return (
@@ -14,7 +15,7 @@ const MarkdownPreview: FC<MarkdownPreviewProps> = ({ markdown }) => {
       <h2>Canlı Önizleme</h2>
 
       {hasContent ? (
-        <article className="preview-content" aria-label="Markdown preview">
+        <article ref={previewRef} className="preview-content" aria-label="Markdown preview">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
         </article>
       ) : (
