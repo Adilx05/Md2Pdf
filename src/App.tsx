@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import FileUploader from './components/FileUploader';
 import MarkdownEditor from './components/MarkdownEditor';
 import MarkdownPreview from './components/MarkdownPreview';
 import Toolbar from './components/Toolbar';
@@ -50,6 +49,10 @@ function App() {
   }, [markdown]);
 
   const handleExport = async () => {
+    if (isExporting || !markdown.trim()) {
+      return;
+    }
+
     setIsExporting(true);
 
     await new Promise((resolve) => {
@@ -60,9 +63,18 @@ function App() {
     setFeedbackMessage('PDF dışa aktarma akışı hazırlandı (demo).');
   };
 
-  const handleReset = () => {
-    setMarkdown(SAMPLE_MARKDOWN);
-    setFeedbackMessage('Editör örnek içerikle sıfırlandı.');
+  const handleClear = () => {
+    setMarkdown('');
+    setFeedbackMessage('Markdown içeriği temizlendi.');
+  };
+
+  const handleCopyMarkdown = async () => {
+    try {
+      await navigator.clipboard.writeText(markdown);
+      setFeedbackMessage('Markdown panoya kopyalandı.');
+    } catch {
+      setFeedbackMessage('Kopyalama başarısız oldu. Lütfen tekrar deneyin.');
+    }
   };
 
   const handleMarkdownFile = async (file: File) => {
@@ -78,10 +90,16 @@ function App() {
 
   return (
     <main className="app-shell">
-      <Toolbar isExporting={isExporting} onExport={handleExport} onReset={handleReset} />
+      <Toolbar
+        isExporting={isExporting}
+        canExport={Boolean(markdown.trim())}
+        onUpload={handleMarkdownFile}
+        onClear={handleClear}
+        onCopyMarkdown={handleCopyMarkdown}
+        onExport={handleExport}
+      />
 
       <section className="meta-row">
-        <FileUploader onFileSelect={handleMarkdownFile} />
         <p>{wordCount} kelime</p>
       </section>
 
