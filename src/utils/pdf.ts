@@ -4,7 +4,12 @@ type Html2PdfOptions = {
   margin: [number, number, number, number];
   filename: string;
   image: { type: 'jpeg' | 'png'; quality: number };
-  html2canvas: { scale: number; useCORS: boolean; scrollY: number };
+  html2canvas: {
+    scale: number;
+    useCORS: boolean;
+    scrollY: number;
+    onclone: (documentClone: Document) => void;
+  };
   jsPDF: { unit: 'mm'; format: 'a4'; orientation: 'portrait' | 'landscape' };
   pagebreak: { mode: Array<'css' | 'legacy' | 'avoid-all'>; avoid: string[] };
 };
@@ -25,6 +30,11 @@ const PDF_OPTIONS: Html2PdfOptions = {
     scale: 2,
     useCORS: true,
     scrollY: 0,
+    onclone: (documentClone) => {
+      documentClone
+        .querySelectorAll('.preview-content')
+        .forEach((element) => element.classList.add('pdf-export-source'));
+    },
   },
   jsPDF: {
     unit: 'mm',
@@ -59,11 +69,16 @@ export const exportPreviewToPdf = async (
 
   const html2pdf = getHtml2Pdf();
 
+  sourceElement.classList.add('pdf-export-source');
+
   await html2pdf()
     .from(sourceElement)
     .set({
       ...PDF_OPTIONS,
       filename: fileName,
     })
-    .save();
+    .save()
+    .finally(() => {
+      sourceElement.classList.remove('pdf-export-source');
+    });
 };

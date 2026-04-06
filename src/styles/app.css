@@ -167,12 +167,16 @@ button:disabled {
 }
 
 .editor-panel textarea {
+  width: 100%;
+  max-width: 100%;
   border: 1px solid rgba(148, 163, 184, 0.35);
   border-radius: 0.6rem;
   padding: 0.9rem;
-  min-height: 100%;
+  min-height: 320px;
   flex: 1;
   resize: vertical;
+  overflow: auto;
+  overflow-wrap: anywhere;
   font: 500 0.95rem/1.45 'Fira Code', 'JetBrains Mono', Menlo, monospace;
   background: rgba(2, 6, 23, 0.72);
   color: #dbeafe;
@@ -194,6 +198,33 @@ button:disabled {
   overflow-y: auto;
   line-height: 1.62;
   color: #dbe7ff;
+}
+
+.preview-content.pdf-export-source {
+  color: #0f172a;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.7rem;
+  padding: 1rem;
+}
+
+.preview-content.pdf-export-source :is(p, li, td, th) {
+  color: #0f172a;
+}
+
+.preview-content.pdf-export-source a {
+  color: #1d4ed8;
+}
+
+.preview-content.pdf-export-source blockquote {
+  background: #f8fafc;
+  color: #1e293b;
+  border-left-color: #3b82f6;
+}
+
+.preview-content.pdf-export-source pre {
+  background: #0f172a;
+  border-color: #cbd5e1;
 }
 
 .preview-empty {
