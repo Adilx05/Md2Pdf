@@ -123,13 +123,123 @@ button:disabled {
 .preview-content {
   flex: 1;
   overflow-y: auto;
-  line-height: 1.6;
+  line-height: 1.5;
+  color: #1a2438;
+}
+
+.preview-empty {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  border: 1px dashed #d7deea;
+  border-radius: 0.6rem;
+  color: #6c7486;
+  background: #fafbff;
+  min-height: 220px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.preview-content :is(h1, h2, h3, h4, h5, h6) {
+  line-height: 1.25;
+  margin: 0.9rem 0 0.5rem;
+  font-weight: 700;
+  break-inside: avoid;
+}
+
+.preview-content h1 {
+  font-size: 1.75rem;
+}
+
+.preview-content h2 {
+  font-size: 1.45rem;
+}
+
+.preview-content h3 {
+  font-size: 1.2rem;
+}
+
+.preview-content p {
+  margin: 0.65rem 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.preview-content ul,
+.preview-content ol {
+  margin: 0.65rem 0;
+  padding-left: 1.4rem;
+}
+
+.preview-content li + li {
+  margin-top: 0.25rem;
+}
+
+.preview-content blockquote {
+  margin: 0.8rem 0;
+  padding: 0.5rem 0.8rem;
+  border-left: 3px solid #b7c0d4;
+  background: #f6f8fc;
+  color: #344058;
+}
+
+.preview-content a {
+  color: #2457d6;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+.preview-content pre {
+  margin: 0.8rem 0;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid #dbe1ef;
+  border-radius: 0.5rem;
+  background: #f7f9fc;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .preview-content code {
   background: #f2f4f8;
   border-radius: 0.35rem;
   padding: 0.1rem 0.3rem;
+  font-family: 'Fira Code', 'JetBrains Mono', Menlo, monospace;
+  font-size: 0.9em;
+}
+
+.preview-content pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+.preview-content table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: 0.8rem 0;
+  font-size: 0.95rem;
+}
+
+.preview-content th,
+.preview-content td {
+  border: 1px solid #d8deeb;
+  padding: 0.45rem 0.5rem;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.preview-content th {
+  background: #f3f6fd;
+  font-weight: 600;
+}
+
+.preview-content tr:nth-child(even) td {
+  background: #fbfcff;
 }
 
 @media (max-width: 900px) {
