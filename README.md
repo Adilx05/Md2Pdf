@@ -69,6 +69,18 @@ VITE_BASE_PATH=/Md2Pdf/ npm run build
 
 Bu sayede asset yolları GitHub Pages altında doğru çözülür.
 
+### Sık Karşılaşılan Hata: `GET .../src/main.tsx 404`
+
+GitHub Pages üzerinde konsolda `GET https://<kullanici>.github.io/src/main.tsx 404` görüyorsanız genelde şu iki durumdan biri vardır:
+
+1. **Yanlış URL açılmıştır.**  
+   Proje Pages URL'si çoğunlukla `https://<kullanici>.github.io/<repo>/` olur.  
+   Örnek: `https://adilx05.github.io/Md2Pdf/`
+2. **`dist/` yerine kaynak dosyalar publish edilmiştir.**  
+   Pages kaynağının build çıktısı (`dist`) olduğundan emin olun (Actions workflow veya `gh-pages -d dist`).
+
+Bu repoda `vite.config.ts`, CI ortamında (`GITHUB_REPOSITORY`) repo adını algılayıp `base` değerini otomatik olarak `/<repo>/` yapacak şekilde ayarlanmıştır. Böylece `VITE_BASE_PATH` verilmediğinde bile proje sayfası deploylarında doğru yol kullanılır.
+
 ## Otomatik GitHub Pages Deploy (GitHub Actions)
 
 Bu repoda `.github/workflows/deploy.yml` ile **`main` branch'ine yapılan her push'ta** otomatik GitHub Pages deploy akışı çalışır. İş akışı Node kurulumu, bağımlılıkların yüklenmesi, `VITE_BASE_PATH=/${{ github.event.repository.name }}/ npm run build` ile build alınması ve ardından Pages artifact/deploy adımlarını içerir.
