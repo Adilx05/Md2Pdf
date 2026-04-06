@@ -3,7 +3,7 @@ import FileUploader from './components/FileUploader';
 import MarkdownEditor from './components/MarkdownEditor';
 import MarkdownPreview from './components/MarkdownPreview';
 import Toolbar from './components/Toolbar';
-import './app.css';
+import './styles/app.css';
 
 const SAMPLE_MARKDOWN = `# Md2Pdf'e hoş geldin 👋
 
