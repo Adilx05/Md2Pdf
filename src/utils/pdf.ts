@@ -71,14 +71,15 @@ export const exportPreviewToPdf = async (
 
   sourceElement.classList.add('pdf-export-source');
 
-  await html2pdf()
-    .from(sourceElement)
-    .set({
-      ...PDF_OPTIONS,
-      filename: fileName,
-    })
-    .save()
-    .finally(() => {
-      sourceElement.classList.remove('pdf-export-source');
-    });
+  try {
+    await html2pdf()
+      .from(sourceElement)
+      .set({
+        ...PDF_OPTIONS,
+        filename: fileName,
+      })
+      .save();
+  } finally {
+    sourceElement.classList.remove('pdf-export-source');
+  }
 };
