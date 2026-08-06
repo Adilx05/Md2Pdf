@@ -20,7 +20,7 @@ export const isMarkdownFile = (file: File) => {
 
 export const readMarkdownFile = async (file: File) => {
   if (!isMarkdownFile(file)) {
-    throw new Error('Invalid file type. Please select .md/.markdown or text/markdown, text/plain.');
+    throw new Error('Invalid file type. Please choose a .md/.markdown file or text/markdown, text/plain.');
   }
 
   return file.text();

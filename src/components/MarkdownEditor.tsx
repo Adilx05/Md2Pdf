@@ -5,9 +5,10 @@ type MarkdownEditorProps = {
   value: string;
   onChange: (value: string) => void;
   onFileSelect: (file: File) => void;
+  wordCount: number;
 };
 
-const MarkdownEditor: FC<MarkdownEditorProps> = ({ value, onChange, onFileSelect }) => {
+const MarkdownEditor: FC<MarkdownEditorProps> = ({ value, onChange, onFileSelect, wordCount }) => {
   const [isDragOver, setIsDragOver] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -40,19 +41,31 @@ const MarkdownEditor: FC<MarkdownEditorProps> = ({ value, onChange, onFileSelect
 
   return (
     <section
-      className={`panel editor-panel ${isDragOver ? 'drag-over' : ''}`}
+      className={`panel panel--editor ${isDragOver ? 'drag-over' : ''}`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
-      <h2>Editor</h2>
-      <p className="editor-drop-hint">Tip: Drag and drop a Markdown file here.</p>
-      <textarea
-        aria-label="Markdown editor"
-        value={value}
-        onChange={handleChange}
-        placeholder="Write your Markdown content here..."
-      />
+      <header className="panel__head">
+        <h2 className="panel__title">Editor</h2>
+        <span className="panel__tag">markdown</span>
+      </header>
+
+      <div className="editor">
+        <textarea
+          className="editor__field"
+          aria-label="Markdown editor"
+          value={value}
+          onChange={handleChange}
+          placeholder="Write your Markdown here…"
+          spellCheck={false}
+        />
+      </div>
+
+      <footer className="editor__foot">
+        <span className="editor__stat">{wordCount} words</span>
+        <span className="editor__hint">Drag &amp; drop a .md file here</span>
+      </footer>
     </section>
   );
 };
