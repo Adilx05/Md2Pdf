@@ -23,7 +23,7 @@ const BrandMark: FC = () => (
     <path d="M23 10v7h7" fill="none" stroke="#DE8325" strokeWidth="2" strokeLinejoin="round" />
     <path
       d="M14 24h10M14 28h7"
-      stroke="#3E5B37"
+      stroke="#3E5B38"
       strokeWidth="2"
       strokeLinecap="round"
     />
